@@ -1,23 +1,20 @@
 const router = require('express').Router();
 let Task = require('../models/task.model')
-let listForTask = require('../models/list.model')
+
+type TaskType = {title: String, time: String, icon: String, id: String, categoryId: String}
 
 type RequestType = {
-    body: any
+    body: TaskType
 };
 
 type ResponceType = {
-    status: any,
-    json: any
+    status: (value: Number) => any,
+    json: (value: Array<TaskType> | String) => TaskType
 };
 
 router.route('/').get((_req: RequestType, res:ResponceType) => {
-    let allTasks:Array<Object> = []
-    listForTask.find()
-        .then((task:Array<any>) => {
-            task.map((item:Object | any) => allTasks = allTasks.concat(item.tasks))
-            return res.json(allTasks)
-        })
+    Task.find()
+        .then((tasks:Array<TaskType>) => res.json(tasks))
         .catch((err:String) => res.status(400).json(err))
 });
 
@@ -25,22 +22,17 @@ router.route('/add').post((req: RequestType, res:ResponceType) => {
     const title = req.body.title
     const time = req.body.time
     const icon = req.body.icon
-    const listId = req.body.id
+    const categoryId = req.body.categoryId
 
     const newTask = new Task({
         title,
         time,
         icon,
+        categoryId
     });
 
-    listForTask.findById(listId)
-        .then((list:any) => {
-            list.tasks.push(newTask)
-            list.save()
-        })
-        .then(() => res.json('Task added!'))
-        .catch((err:String) => res.status(400).json(err))
     newTask.save()
+        .then(() => res.json('Task added'))
         .catch((err:String) => res.status(400).json(err))
 });
 

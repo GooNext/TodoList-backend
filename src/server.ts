@@ -2,7 +2,7 @@ import express from 'express'
 import mongoose from 'mongoose'
 const cors = require('cors')
 const taskRouter = require('./routes/task')
-const listRouter = require('./routes/list')
+const categoriesRouter = require('./routes/categories')
 
 require('dotenv').config()
 
@@ -20,7 +20,7 @@ connection.once('open', () => {
 })
 
 app.use('/tasks', taskRouter)
-app.use('/lists', listRouter)
+app.use('/categories', categoriesRouter)
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`)
