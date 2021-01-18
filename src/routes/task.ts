@@ -13,6 +13,12 @@ type ResponceType = {
     json: (value: Array<TaskType> | String) => TaskType
 };
 
+router.route('/:id').get((req: RequestType, res: ResponceType) => {
+    Task.findById(req.params.id)
+        .then((task: Array<TaskType>) => res.json(task))
+        .catch((err: String) => res.status(400).json(err))
+});
+
 router.route('/').get((_req: RequestType, res: ResponceType) => {
     Task.find()
         .then((tasks: Array<TaskType>) => res.json(tasks))
