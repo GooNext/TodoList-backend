@@ -54,4 +54,14 @@ router.route('/by-category/:categoryId').get((req: RequestType, res: ResponceTyp
         .catch((err: String) => res.status(400).json(err))
 })
 
+router.route('/:id').delete((req: RequestType, res: ResponceType) => {
+    const id = req.params.id
+
+    Task.findByIdAndDelete(id)
+        .then(() => res.json('Task deleted'))
+        .catch((err: String) => res.status(400).json(err))
+})
+
+
+
 module.exports = router;
