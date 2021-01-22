@@ -5,7 +5,8 @@ const taskSchema = new Schema({
     title: {type: String, required: true},
     time: {type: String, required: true},
     icon: {type: String, required: true, default: ''},
-    categoryId: {type: String, required: true}
+    categoryId: {type: String, required: true},
+    boardId: {type: String, required: true}
 },
     {timestamps: true}
 )
