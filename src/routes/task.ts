@@ -25,6 +25,13 @@ router.route('/').get((_req: RequestType, res: ResponceType) => {
         .catch((err: String) => res.status(400).json(err))
 });
 
+router.route('/update/boardId/:id').put((req: RequestType, res: ResponceType) => {
+    const boardId = req.body.boardId
+    Task.findByIdAndUpdate(req.params.id, {boardId})
+        .then((tasks: Array<TaskType>) => res.json(tasks))
+        .catch((err: String) => res.status(400).json(err))
+});
+
 router.route('/add').post((req: RequestType, res: ResponceType) => {
     const title = req.body.title
     const time = req.body.time
