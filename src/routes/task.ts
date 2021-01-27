@@ -1,7 +1,7 @@
 const router = require('express').Router();
 let Task = require('../models/task.model')
 
-type TaskType = { title: String, time: String, icon: String, id: String, categoryId: String, boardId:String, description: String }
+type TaskType = { title: String, time: String, icon: String, id: String, categoryId: String, boardId:String, description: String, isCompleted: Boolean }
 
 type RequestType = {
     body: TaskType,
@@ -39,6 +39,7 @@ router.route('/add').post((req: RequestType, res: ResponceType) => {
     const categoryId = req.body.categoryId
     const boardId = req.body.boardId
     const description = req.body.description
+    const isCompleted = req.body.isCompleted
 
     const newTask = new Task({
         title,
@@ -46,7 +47,8 @@ router.route('/add').post((req: RequestType, res: ResponceType) => {
         icon,
         categoryId,
         boardId,
-        description
+        description,
+        isCompleted
     });
 
     newTask.save()

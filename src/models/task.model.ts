@@ -8,6 +8,7 @@ const taskSchema = new Schema({
     categoryId: {type: String, required: true},
     boardId: {type: String, required: true},
     description: {type: String, required: false},
+    isCompleted: {type: Boolean, required: true}
 },
     {timestamps: true}
 )
