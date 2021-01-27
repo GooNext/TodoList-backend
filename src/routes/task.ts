@@ -32,6 +32,23 @@ router.route('/update/boardId/:id').put((req: RequestType, res: ResponceType) =>
         .catch((err: String) => res.status(400).json(err))
 });
 
+router.route('/update/:id').put((req: RequestType, res: ResponceType) => {
+    const title = req.body.title
+    const description = req.body.description
+
+    Task.findByIdAndUpdate(req.params.id, {title, description})
+        .then((tasks: Array<TaskType>) => res.json(tasks))
+        .catch((err: String) => res.status(400).json(err))
+});
+
+router.route('/update-status/:id').put((req: RequestType, res: ResponceType) => {
+    const isCompleted = req.body.isCompleted
+
+    Task.findByIdAndUpdate(req.params.id, {isCompleted})
+        .then((tasks: Array<TaskType>) => res.json(tasks))
+        .catch((err: String) => res.status(400).json(err))
+});
+
 router.route('/add').post((req: RequestType, res: ResponceType) => {
     const title = req.body.title
     const time = req.body.time
