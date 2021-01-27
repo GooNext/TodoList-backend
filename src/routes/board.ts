@@ -33,5 +33,13 @@ boardRouter.route('/add').post((req: RequestType, res: ResponceType) => {
         .catch((err: String) => res.status(400).json(err))
 });
 
+boardRouter.route('/:id').delete((req: RequestType, res: ResponceType) => {
+    const id = req.params.id
+
+    Board.findByIdAndDelete(id)
+        .then(() => res.json('Board deleted'))
+        .catch((err: String) => res.status(400).json(err))
+})
+
 
 module.exports = boardRouter;
