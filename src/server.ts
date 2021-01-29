@@ -4,6 +4,9 @@ const cors = require('cors')
 const taskRouter = require('./routes/task')
 const categoriesRouter = require('./routes/categories')
 const boardRouter = require('./routes/board')
+const userRouter = require('./routes/user')
+const loginRouter = require('./routes/login')
+const logAuth = require('./middleware/logAuth')
 
 require('dotenv').config()
 
@@ -20,9 +23,14 @@ connection.once('open', () => {
     console.log('MongoDB database connection established successfully')
 })
 
-app.use('/tasks', taskRouter)
-app.use('/categories', categoriesRouter)
-app.use('/boards', boardRouter)
+// app.use(logRequest);
+
+
+app.use('/login', loginRouter)
+app.use('/user', userRouter)
+app.use('/tasks', logAuth, taskRouter)
+app.use('/categories', logAuth, categoriesRouter)
+app.use('/boards', logAuth, boardRouter)
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`)
