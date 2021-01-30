@@ -1,7 +1,7 @@
 const router = require('express').Router();
 let Task = require('../models/task.model')
 
-type TaskType = { title: String, time: String, icon: String, id: String, categoryId: String, boardId:String, description: String, isCompleted: Boolean }
+type TaskType = { title: String, time: String, icon: String, id: String, categoryId: String, boardId:String, description: String, isCompleted: Boolean, login: string }
 
 type RequestType = {
     body: TaskType,

@@ -1,7 +1,7 @@
-const userRouter = require('express').Router();
-const UserModel = require('../models/user.model');
+const userRouter = require("express").Router();
+const UserModel = require("../models/user.model");
 
-console.log(UserModel)
+console.log(UserModel);
 
 // router.route('/').get(async (req, res, next) => {
 //   try {
@@ -12,34 +12,27 @@ console.log(UserModel)
 //   }
 // });
 
-// router.route('/:id').get(async (req, res, next) => {
-//   try {
-//     const user = await usersService.getUser(req.params.id);
-//     if (user) res.status(200).send(User.toResponse(user));
-//     else {
-//       const err = new Error('Not Found');
-//       err.status = 404;
-//       return next(err);
-//     }
-//   } catch (err) {
-//     return next(err);
-//   }
-// });
+userRouter.route("/:login").get((req: RequestType, res: ResponceType) => {
+  UserModel.find({ login: req.params.login })
+    .then((user: Array<TaskType>) => res.json(user))
+    .catch((err: String) => res.status(400).json(err));
+});
 
-userRouter.route('/').post(async (req:any, res:any, next:any) => {
-        const name = req.body.name
-        const login = req.body.login
-        const password = req.body.password
-    
-        const newUser = new UserModel({
-            name,
-            login,
-            password
-        });
-    
-        newUser.save()
-            .then(() => res.json('User added'))
-            .catch((err: String) => res.status(400).json(err))
+userRouter.route("/").post(async (req: any, res: any, next: any) => {
+  const name = req.body.name;
+  const login = req.body.login;
+  const password = req.body.password;
+
+  const newUser = new UserModel({
+    name,
+    login,
+    password,
+  });
+
+  newUser
+    .save()
+    .then(() => res.json("User added"))
+    .catch((err: String) => res.status(400).json(err));
 });
 
 // router.route('/:id').put(async (req, res, next) => {
