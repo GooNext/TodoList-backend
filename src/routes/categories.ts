@@ -22,12 +22,21 @@ categoryRouter
       });
   });
 
+categoryRouter.route("/:id").put((req: RequestType, res: ResponceType) => {
+  const title = req.body.title;
+  const description = req.body.description;
+  Category.findByIdAndUpdate(req.params.id, { title, description })
+    .then((category: Array<TaskType>) => res.json(category))
+    .catch((err: String) => res.status(400).json(err));
+});
+
 categoryRouter
   .route("/add")
   .post((req: categoryRequestType, res: categoryResponceType) => {
     const title = req.body.title;
     const time = req.body.time;
     const icon = req.body.icon;
+    const description = req.body.description;
     const userId = req.body.userId;
 
     const newCategory = new Category({
@@ -35,6 +44,7 @@ categoryRouter
       time,
       icon,
       userId,
+      description,
     });
     newCategory
       .save()
